@@ -55,6 +55,12 @@ private String title;
 @Column(name = "content",nullable =false)
 private String content;
 
+@Column(name = "go_time" , nullable =false)
+private String go_time;
+
+@Column (name = "leave_time" ,nullable =false)
+private String leave_time;
+
 @Column (name= "created_at",nullable =false)
 private Timestamp created_at;
 
@@ -91,6 +97,24 @@ public String getContent(){
 public void setContent(String content){
     this.content =content;
     }
+public String getGo_time(){
+    return go_time;
+}
+public void setGo_time(String go_time){
+        this.go_time = go_time;
+    }
+public String getLeave_time(){
+    return leave_time;
+}
+public void setLeave_time(String leave_time){
+    this.leave_time= leave_time;
+    }
+
+
+
+
+
+
 public Timestamp getCreated_at(){
     return created_at;
 }

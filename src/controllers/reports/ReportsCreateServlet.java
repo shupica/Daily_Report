@@ -55,10 +55,13 @@ public class ReportsCreateServlet extends HttpServlet {
 
       r.setTitle(request.getParameter("title"));
       r.setContent(request.getParameter("content"));
+      r.setGo_time(request.getParameter("go_time"));
+      r.setLeave_time(request.getParameter("leave_time"));
 
       Timestamp currentTime = new Timestamp(System.currentTimeMillis());
       r.setCreated_at(currentTime);
       r.setUpdated_at(currentTime);
+
 
       List<String> errors = ReportValidator.validate(r);
       if(errors.size()> 0){
