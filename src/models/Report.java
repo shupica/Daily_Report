@@ -34,6 +34,7 @@ import javax.persistence.Table;
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
             )
 })
+
 @Entity
     public class Report {
 @Id

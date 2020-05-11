@@ -19,6 +19,7 @@
                     <th class="leave_time">退勤時間</th>
                     <th class="report_action">操作</th>
 
+
                 </tr>
                 <c:forEach var="report" items="${reports}" varStatus="status">
                     <tr class="row${status.count % 2}">
@@ -28,7 +29,7 @@
                         <td class="report_go_time">"${report.go_time}"</td>
                         <td class="report_leave_time">"${report.leave_time}"</td>
                         <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
-
+                        <td class="report_iine"><a href="<c:url value='/reports/iine?id=${report.id}'  />">いいね</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
