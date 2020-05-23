@@ -110,12 +110,6 @@ public String getLeave_time(){
 public void setLeave_time(String leave_time){
     this.leave_time= leave_time;
     }
-
-
-
-
-
-
 public Timestamp getCreated_at(){
     return created_at;
 }
