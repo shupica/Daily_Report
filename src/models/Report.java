@@ -32,7 +32,9 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getMyReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+
             )
+
 })
 
 @Entity
@@ -67,6 +69,10 @@ private Timestamp created_at;
 
 @Column (name ="updated_at" ,nullable =false)
 private Timestamp updated_at;
+
+@JoinColumn(name = "search", nullable = true)
+private boolean search;
+
 
 public Integer getId(){
     return id;
@@ -122,6 +128,14 @@ public Timestamp getUpdated_at(){
 }
 public void setUpdated_at(Timestamp updated_at){
     this.updated_at =updated_at;
+}
+
+public boolean isSearch() {
+    return search;
+}
+
+public void setSearch(boolean search) {
+    this.search = search;
 }
 }
 

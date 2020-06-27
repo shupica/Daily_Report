@@ -34,21 +34,34 @@
                         <td class="report_action"><a
                             href="<c:url value='/reports/show?id=${report.id}' />">詳細を見る</a></td>
                         <td class="report_iine">
-                        <c:if test="${empty var}">
-                                <form method="POST"
-                                    action="${pageContext.request.contextPath}/reports/iine">
-                                    <input type="hidden" name="_token" value="${_token}" /> <input
-                                        type="hidden" name="report_id" value="${report.id}" /> <input
-                                        type="submit" value="いいね" >
 
-                                </form>
-                            </c:if>
-                            <c:if test="${!empty var}">
+                            <c:if test="${report.search == 'true'}">
+                                <c:set var="data" />
+                                <c:out value="${data}" />
                                 <form method="POST"
                                     action="${pageContext.request.contextPath}/reports/delete">
-                                    <input type="hidden" name="_token" value="{_token}" /> <input
-                                        type="hidden" name="report_id" value="${report_id}" /> <input
-                                        type="submit" value="いいね解除">
+                                    <input type="hidden" name="_token" value="${_token}" />
+                                    <input type="hidden" name="report_id" value="${report.id}" />
+
+                                    <button type="submit">
+                                        <img src="${pageContext.request.contextPath}/img/favorite.png"
+                                            alt="いいね">
+                                    </button>
+                                </form>
+                            </c:if>
+
+                            <c:if test="${report.search == 'false'}">
+                                <c:set var="data" />
+                                <c:out value="${data}" />
+                                <form method="POST"
+                                    action="${pageContext.request.contextPath}/reports/iine">
+                                    <input type="hidden" name="_token" value="${_token}" />
+                                    <input type="hidden" name="report_id" value="${report.id}" />
+
+                                    <button type="submit">
+                                        <img src="${pageContext.request.contextPath}/img/blank.png"
+                                            alt="いいね">
+                                    </button>
                                 </form>
                             </c:if>
                     </tr>

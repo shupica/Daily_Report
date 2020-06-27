@@ -15,8 +15,6 @@ import models.Employee;
 import models.Report;
 import utils.DBUtil;
 
-
-
 /**
  * Servlet implementation class TopPageIndexServlet
  */
@@ -35,33 +33,46 @@ public class TopPageIndexServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
-        Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
+        Employee login_employee = (Employee) request.getSession().getAttribute("login_employee");
 
         int page;
-        try{
+        try {
             page = Integer.parseInt(request.getParameter("page"));
-            }catch(Exception e){
-                page =1;
-            }
+        } catch (Exception e) {
+            page = 1;
+        }
         List<Report> reports = em.createNamedQuery("getMyAllReports", Report.class)
                 .setParameter("employee", login_employee)
-                                 .setFirstResult(15 * (page - 1))
-                                 .setMaxResults(15)
-                                 .getResultList();
-      long reports_count = (long)em.createNamedQuery("getMyReportsCount", Long.class)
-                                    .setParameter("employee", login_employee)
-                                    .getSingleResult();
-     em.close();
+                .setFirstResult(15 * (page - 1))
+                .setMaxResults(15)
+                .getResultList();
+        long reports_count = (long) em.createNamedQuery("getMyReportsCount", Long.class)
+                .setParameter("employee", login_employee)
+                .getSingleResult();
 
-     request.setAttribute("reports",reports);
-     request.setAttribute("reports_count",reports_count);
-     request.setAttribute("page",page);
-     request.setAttribute("_token",request.getSession().getId());
+        for (Report report : reports) {
+            long iineCount = (long) em.createNamedQuery("getIineSearch", Long.class)
+                    .setParameter("employee", login_employee)
+                    .setParameter("report", report)
+                    .getSingleResult();
+            if (iineCount > 0) {
+                report.setSearch(true);
+            } else {
+                report.setSearch(false);
+            }
+        }
+        em.close();
 
-        if(request.getSession().getAttribute("flush") != null) {
+        request.setAttribute("reports", reports);
+        request.setAttribute("reports_count", reports_count);
+        request.setAttribute("page", page);
+        request.setAttribute("_token", request.getSession().getId());
+
+        if (request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
             request.getSession().removeAttribute("flush");
         }
@@ -69,6 +80,5 @@ public class TopPageIndexServlet extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/topPage/index.jsp");
         rd.forward(request, response);
     }
-
 
 }

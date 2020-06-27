@@ -42,7 +42,7 @@ public class ReportsCreateServlet extends HttpServlet {
     String _token =(String)request.getParameter("_token");
     if(_token != null && _token.equals(request.getSession().getId())){
       EntityManager em =DBUtil.createEntityManager();
-
+      
       Report r =new Report();
       r.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
